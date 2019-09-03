@@ -14,5 +14,8 @@
     "fragment"
   ],
   "author": "Mikołaj Rozwadowski",
-  "license": "ISC"
+  "license": "ISC",
+  "peerDependencies": {
+    "react": "^16.8.0"
+  }
 }

@@ -13,9 +13,13 @@ const getHashParam = (key, location = window.location) => {
 
 const setHashParam = (key, value, location = window.location) => {
   const [prefix, searchParams] = getHashSearchParams(location);
-  searchParams.set(key, value);
+  if (typeof value === 'undefined') {
+    searchParams.delete(key);
+  } else {
+    searchParams.set(key, value);
+  }
   const search = searchParams.toString();
-  location.hash = `${prefix}?${search}`;
+  location.hash = (search.length > 0) ? `${prefix}?${search}` : prefix;
 };
 
 const useHashParam = (key) => {

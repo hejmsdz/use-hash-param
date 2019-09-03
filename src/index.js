@@ -25,10 +25,10 @@ const useHashParam = (key) => {
     handleHashChange();
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
+  }, [key]);
   const setValue = useCallback((value) => {
     setHashParam(key, value);
-  }, []);
+  }, [key]);
   return [innerValue, setValue];
 };
 

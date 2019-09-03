@@ -1,20 +1,35 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+
+const getHashSearchParams = (location) => {
+  const hash = location.hash.slice(1);
+  const [prefix, query] = hash.split('?');
+  return [prefix, new URLSearchParams(query)];
+};
 
 const getHashParam = (key, location = window.location) => {
-  const hash = location.hash.slice(1);
-  const searchParams = new URLSearchParams(hash);
+  const [_, searchParams] = getHashSearchParams(location);
   return searchParams.get(key);
 };
 
+const setHashParam = (key, value, location = window.location) => {
+  const [prefix, searchParams] = getHashSearchParams(location);
+  searchParams.set(key, value);
+  const search = searchParams.toString();
+  location.hash = `${prefix}?${search}`;
+};
+
 const useHashParam = (key) => {
-  const [value, setValue] = useState();
+  const [innerValue, setInnerValue] = useState();
   useEffect(() => {
-    const handleHashChange = () => setValue(getHashParam(key));
+    const handleHashChange = () => setInnerValue(getHashParam(key));
     handleHashChange();
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
-  return value;
+  const setValue = useCallback((value) => {
+    setHashParam(key, value);
+  }, []);
+  return [innerValue, setValue];
 };
 
 export default useHashParam;

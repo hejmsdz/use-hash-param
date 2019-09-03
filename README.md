@@ -1,13 +1,11 @@
 # useHashParam
 
-React hook that allows to keep your state in sync with URL parameters
+React hook that allows to keep your state in sync with URL parameters.
 
 ## Installation
 
-The package is coming soon to npm. Meanwhile you can install it from GitHub:
-
 ```sh
-npm install --save hejmsdz/use-hash-param
+npm install --save use-hash-param
 ```
 
 ## Usage

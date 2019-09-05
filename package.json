@@ -13,6 +13,12 @@
     "hash",
     "fragment"
   ],
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/hejmsdz/use-hash-param.git"
+  },
+  "homepage": "https://github.com/hejmsdz/use-hash-param",
+  "bugs": "https://github.com/hejmsdz/use-hash-param/issues",
   "author": "Mikołaj Rozwadowski",
   "license": "ISC",
   "peerDependencies": {

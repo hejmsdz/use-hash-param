@@ -1,6 +1,6 @@
 {
   "name": "use-hash-param",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "React hook for handling parameters in URL fragment",
   "main": "src/index.js",
   "scripts": {
@@ -14,8 +14,8 @@
     "fragment"
   ],
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/hejmsdz/use-hash-param.git"
+    "type": "git",
+    "url": "https://github.com/hejmsdz/use-hash-param.git"
   },
   "homepage": "https://github.com/hejmsdz/use-hash-param",
   "bugs": "https://github.com/hejmsdz/use-hash-param/issues",

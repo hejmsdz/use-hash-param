@@ -36,7 +36,11 @@ const useHashParam = (key) => {
   }, [key]);
   
   const setValue = useCallback((value) => {
-    setHashParam(key, value);
+    if (typeof value === 'function') {
+      setHashParam(key, value(getHashParam(key)));
+    } else {
+      setHashParam(key, value);
+    }
   }, [key]);
   
   return [innerValue, setValue];

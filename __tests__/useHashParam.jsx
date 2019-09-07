@@ -14,6 +14,7 @@ const SetterExampleHOC = (...setterArgs) => () => {
 };
 
 const SetterExample = SetterExampleHOC('example');
+const CallbackSetterExample = SetterExampleHOC(value => `${value}${value}`);
 const ResetterExample = SetterExampleHOC();
 const EmptyStringResetterExample = SetterExampleHOC('');
 
@@ -52,6 +53,14 @@ describe('useHashParam', () => {
       global.location.hash = '#fragment';
       render(<SetterExample />);
       expect(global.location.hash).toEqual('#fragment?value=example');
+    });
+
+    describe('called with a function', () => {
+      it('removes hash parameter', () => {
+        global.location.hash = '#?value=cous';
+        render(<CallbackSetterExample />);
+        expect(global.location.hash).toEqual('#?value=couscous');
+      });
     });
 
     describe('called without arguments', () => {

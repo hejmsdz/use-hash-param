@@ -25,7 +25,10 @@
     "react": "^16.8.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.6.0",
+    "@babel/preset-react": "^7.0.0",
     "@testing-library/react": "^9.1.4",
+    "babel-jest": "^24.9.0",
     "jest": "^24.9.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0"

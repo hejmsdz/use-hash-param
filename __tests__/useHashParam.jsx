@@ -36,4 +36,16 @@ describe('useHashParam', () => {
     global.location.hash = '#?value=changed';
     return waitForElement(() => getByText('changed'));
   });
+
+  it('keeps other parameters intact when setter is called', () => {
+    global.location.hash = '#?lorem=ipsum';
+    render(<SetterExample />);
+    expect(global.location.hash).toEqual('#?lorem=ipsum&value=example');
+  });
+
+  it('keeps part before ? intact when setter is called', () => {
+    global.location.hash = '#fragment';
+    render(<SetterExample />);
+    expect(global.location.hash).toEqual('#fragment?value=example');
+  });
 });

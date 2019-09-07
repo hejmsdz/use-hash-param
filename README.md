@@ -1,5 +1,8 @@
 # useHashParam
 
+[![Package version on NPM](https://img.shields.io/npm/v/use-hash-param)](https://npmjs.com/package/use-hash-param)
+[![Build status](https://img.shields.io/travis/com/hejmsdz/use-hash-param)](https://travis-ci.com/hejmsdz/use-hash-param)
+
 React hook that allows to keep your state in sync with URL parameters.
 
 ## Installation

@@ -15,7 +15,7 @@ const getHashParam = (key, location = window.location) => {
 const setHashParam = (key, value, location = window.location) => {
   const [prefix, searchParams] = getHashSearchParams(location);
 
-  if (typeof value === 'undefined') {
+  if (typeof value === 'undefined' || value === '') {
     searchParams.delete(key);
   } else {
     searchParams.set(key, value);

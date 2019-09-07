@@ -15,6 +15,7 @@ const SetterExampleHOC = (...setterArgs) => () => {
 
 const SetterExample = SetterExampleHOC('example');
 const ResetterExample = SetterExampleHOC();
+const EmptyStringResetterExample = SetterExampleHOC('');
 
 describe('useHashParam', () => {
   beforeAll(() => {
@@ -63,6 +64,20 @@ describe('useHashParam', () => {
       it('removes hash parameter, keeping part before ?', () => {
         global.location.hash = '#fragment?value=example';
         render(<ResetterExample />);
+        expect(global.location.hash).toEqual('#fragment');
+      });
+    });
+
+    describe('called with an empty string', () => {
+      it('removes hash parameter', () => {
+        global.location.hash = '#?value=example';
+        render(<EmptyStringResetterExample />);
+        expect(global.location.hash).toEqual('');
+      });
+
+      it('removes hash parameter, keeping part before ?', () => {
+        global.location.hash = '#fragment?value=example';
+        render(<EmptyStringResetterExample />);
         expect(global.location.hash).toEqual('#fragment');
       });
     });

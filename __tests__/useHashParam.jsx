@@ -7,11 +7,13 @@ const GetterExample = () => {
   return <span>{value}</span>;
 };
 
-const SetterExample = () => {
+const SetterExampleHOC = (...setterArgs) => () => {
   const [value, setValue] = useHashParam('value');
-  useLayoutEffect(() => { setValue('example'); }, []);
+  useLayoutEffect(() => { setValue(...setterArgs); }, []);
   return <span>{value}</span>;
 };
+
+const SetterExample = SetterExampleHOC('example');
 
 describe('useHashParam', () => {
   beforeAll(() => {

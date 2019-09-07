@@ -14,6 +14,7 @@ const SetterExampleHOC = (...setterArgs) => () => {
 };
 
 const SetterExample = SetterExampleHOC('example');
+const ResetterExample = SetterExampleHOC();
 
 describe('useHashParam', () => {
   beforeAll(() => {
@@ -49,5 +50,17 @@ describe('useHashParam', () => {
     global.location.hash = '#fragment';
     render(<SetterExample />);
     expect(global.location.hash).toEqual('#fragment?value=example');
+  });
+
+  it('removes hash parameter when setter is called without arguments', () => {
+    global.location.hash = '#?value=example';
+    render(<ResetterExample />);
+    expect(global.location.hash).toEqual('');
+  });
+
+  it('removes hash parameter, keeping part before ? when setter is called without arguments', () => {
+    global.location.hash = '#fragment?value=example';
+    render(<ResetterExample />);
+    expect(global.location.hash).toEqual('#fragment');
   });
 });

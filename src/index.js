@@ -25,7 +25,7 @@ const setHashParam = (key, value, location = window.location) => {
   location.hash = search ? `${prefix}?${search}` : prefix;
 };
 
-const useHashParam = (key) => {
+const useHashParam = (key, defaultValue) => {
   const [innerValue, setInnerValue] = useState();
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const useHashParam = (key) => {
     }
   }, [key]);
   
-  return [innerValue, setValue];
+  return [innerValue || defaultValue, setValue];
 };
 
 export default useHashParam;

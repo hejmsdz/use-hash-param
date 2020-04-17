@@ -7,6 +7,11 @@ const GetterExample = () => {
   return <span>{value}</span>;
 };
 
+const DefaultGetterExample = () => {
+  const [value] = useHashParam('value', 'default');
+  return <span>{value}</span>;
+};
+
 const SetterExampleHOC = (...setterArgs) => () => {
   const [value, setValue] = useHashParam('value');
   useLayoutEffect(() => { setValue(...setterArgs); }, []);
@@ -19,7 +24,7 @@ const ResetterExample = SetterExampleHOC();
 const EmptyStringResetterExample = SetterExampleHOC('');
 
 describe('useHashParam', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     global.location.hash = '';
   });
 
@@ -34,6 +39,23 @@ describe('useHashParam', () => {
     const { getByText } = render(<GetterExample />);
     global.location.hash = '#?value=changed';
     return waitForElement(() => getByText('changed'));
+  });
+
+  describe('when default value is given', () => {
+    describe('when hash parameter is missing', () => {
+      it('sets hash parameter to default value', () => {
+        const { getByText } = render(<DefaultGetterExample />);
+        getByText('default');
+      });
+    });
+
+    describe('when hash parameter is present', () => {
+      it('uses the given parameter value', () => {
+        global.location.hash = '#?value=initial';
+        const { getByText } = render(<DefaultGetterExample />);
+        getByText('initial');
+      });
+    });
   });
 
   describe('setter function', () => {

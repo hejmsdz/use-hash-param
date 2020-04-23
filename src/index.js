@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+const { useState, useEffect, useCallback } = require('react');
 
 const getHashSearchParams = (location) => {
   const hash = location.hash.slice(1);
@@ -45,5 +45,4 @@ const useHashParam = (key, defaultValue) => {
   
   return [innerValue || defaultValue, setValue];
 };
-
 export default useHashParam;

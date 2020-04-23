@@ -26,11 +26,10 @@ const setHashParam = (key, value, location = window.location) => {
 };
 
 const useHashParam = (key, defaultValue) => {
-  const [innerValue, setInnerValue] = useState();
+  const [innerValue, setInnerValue] = useState(getHashParam(key));
 
   useEffect(() => {
     const handleHashChange = () => setInnerValue(getHashParam(key));
-    handleHashChange();
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, [key]);

@@ -61,8 +61,10 @@ describe('useHashParam', () => {
   describe('setter function', () => {
     it('updates URL hash and variable', () => {
       const { getByText } = render(<SetterExample />);
-      getByText('example');
-      expect(global.location.hash).toEqual('#?value=example');
+      return waitForElement(() => getByText('example'))
+        .then(() => {
+          expect(global.location.hash).toEqual('#?value=example');
+        });
     });
 
     it('keeps other parameters intact', () => {

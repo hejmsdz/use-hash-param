@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from 'react';
-import { render, waitForElement } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import useHashParam from '../src';
 
 const GetterExample = () => {
@@ -36,9 +36,9 @@ describe('useHashParam', () => {
 
   it('updates variable on hash change', () => {
     global.location.hash = '#?value=initial';
-    const { getByText } = render(<GetterExample />);
+    const { findByText } = render(<GetterExample />);
     global.location.hash = '#?value=changed';
-    return waitForElement(() => getByText('changed'));
+    return findByText('changed');
   });
 
   describe('when default value is given', () => {
@@ -60,8 +60,8 @@ describe('useHashParam', () => {
 
   describe('setter function', () => {
     it('updates URL hash and variable', () => {
-      const { getByText } = render(<SetterExample />);
-      return waitForElement(() => getByText('example'))
+      const { findByText } = render(<SetterExample />);
+      return findByText('example')
         .then(() => {
           expect(global.location.hash).toEqual('#?value=example');
         });

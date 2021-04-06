@@ -11,9 +11,8 @@
   "author": "Mikołaj Rozwadowski",
   "license": "ISC",
   "dependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "use-hash-param": "file:../"
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
   },
   "devDependencies": {
     "parcel": "^2.0.0-beta.2"

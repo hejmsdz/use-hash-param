@@ -11,7 +11,7 @@ const getHashParam = (key, defaultValue) => {
   if (typeof window === 'undefined') {
     return defaultValue;
   }
-  const [_, searchParams] = getHashSearchParams(window.location);
+  const [, searchParams] = getHashSearchParams(window.location);
   return searchParams.get(key);
 };
 
@@ -41,12 +41,12 @@ const useHashParam = (key, defaultValue) => {
   }, [key]);
 
   const setValue = useCallback((value) => {
-      if (typeof value === 'function') {
-        setHashParam(key, value(getHashParam(key, defaultValue)));
-      } else {
-        setHashParam(key, value);
-      }
-    }, [key]);
+    if (typeof value === 'function') {
+      setHashParam(key, value(getHashParam(key, defaultValue)));
+    } else {
+      setHashParam(key, value);
+    }
+  }, [key]);
 
   return [innerValue || defaultValue, setValue];
 };

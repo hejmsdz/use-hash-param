@@ -19,7 +19,7 @@ const SetterExampleHOC = (...setterArgs) => () => {
 };
 
 const SetterExample = SetterExampleHOC('example');
-const CallbackSetterExample = SetterExampleHOC(value => `${value}${value}`);
+const CallbackSetterExample = SetterExampleHOC((value) => `${value}${value}`);
 const ResetterExample = SetterExampleHOC();
 const EmptyStringResetterExample = SetterExampleHOC('');
 
@@ -72,7 +72,7 @@ describe('useHashParam', () => {
       render(<SetterExample />);
       expect(global.location.hash).toEqual('#?lorem=ipsum&value=example');
     });
-  
+
     it('keeps part before ? intact', () => {
       global.location.hash = '#fragment';
       render(<SetterExample />);

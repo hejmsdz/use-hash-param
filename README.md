@@ -22,9 +22,12 @@ function ControlledInput() {
   const [name, setName] = useHashParam('name');
 
   return (
-    <input value={name || ''} onChange={e => setName(e.target.value)} />
+    <input
+      value={name || ''}
+      onChange={e => setName(e.target.value)}
+    />
   );
-);
+};
 ```
 
 Anything you type into the input will be reflected in the address bar

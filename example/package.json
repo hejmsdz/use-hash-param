@@ -1,0 +1,21 @@
+{
+  "name": "use-hash-param-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "start": "parcel serve index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mikołaj Rozwadowski",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "use-hash-param": "file:../"
+  },
+  "devDependencies": {
+    "parcel": "^2.0.0-beta.2"
+  }
+}

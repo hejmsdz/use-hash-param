@@ -1,6 +1,6 @@
 {
   "name": "use-hash-param",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "description": "React hook for handling parameters in URL fragment",
   "type": "module",
   "files": [

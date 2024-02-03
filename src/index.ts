@@ -43,7 +43,7 @@ type Setter = (value?: (string | Updater)) => void;
  */
 
 const useHashParam = (key: string, defaultValue?: string): [string | undefined, Setter] => {
-  const [innerValue, setInnerValue] = useState(getHashParam(key, defaultValue));
+  const [innerValue, setInnerValue] = useState<string|undefined>(() => getHashParam(key, defaultValue));
 
   useEffect(() => {
     const handleHashChange = () => setInnerValue(getHashParam(key, defaultValue));

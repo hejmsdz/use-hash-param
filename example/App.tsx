@@ -5,10 +5,11 @@ function ControlledInput() {
   const [name, setName] = useHashParam('name');
 
   return (
-    <input
-      value={name || ''}
-      onChange={(e) => setName(e.target.value)}
-    />
+    <div>
+      <input value={name || ""} onChange={(e) => setName(e.target.value)} />
+      <button onClick={() => setName()}>reset</button>
+      <button onClick={() => setName((val) => `${val}${val}`)}>double</button>
+    </div>
   );
 }
 

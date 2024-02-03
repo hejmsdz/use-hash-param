@@ -33,7 +33,7 @@ const setHashParam = (key: string, value?: string) => {
 };
 
 type Updater = (prevValue?: string) => string;
-type Setter = (value: (string | Updater | undefined)) => void;
+type Setter = (value?: (string | Updater)) => void;
 
 /**
  * @param key The parameter-name to use from the hash-string query string.
@@ -52,7 +52,7 @@ const useHashParam = (key: string, defaultValue?: string): [string | undefined, 
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, [key]);
 
-  const setValue = useCallback((value) => {
+  const setValue = useCallback((value?: string | Updater) => {
     if (typeof value === 'function') {
       setHashParam(key, value(getHashParam(key, defaultValue)));
     } else {

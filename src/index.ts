@@ -32,7 +32,7 @@ const setHashParam = (key: string, value?: string) => {
   }
 };
 
-type Updater = (string?) => string;
+type Updater = (prevValue?: string) => string;
 type Setter = (value: (string | Updater | undefined)) => void;
 
 /**

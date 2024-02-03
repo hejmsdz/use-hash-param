@@ -14,7 +14,7 @@ const getHashParam = (key: string, defaultValue?: string) => {
 
   const [, searchParams] = getHashSearchParams(window.location);
 
-  return searchParams.get(key) ?? undefined;
+  return searchParams.get(key) ?? defaultValue;
 };
 
 const setHashParam = (key: string, value?: string) => {

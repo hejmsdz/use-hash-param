@@ -13,14 +13,15 @@ const DefaultGetterExample = () => {
   return <span>{value}</span>;
 };
 
-const buildSetterExample = (setterArg?) => () => {
-  const [value, setValue] = useHashParam('value');
+const buildSetterExample = (setterArg?, defaultValue?) => () => {
+  const [value, setValue] = useHashParam('value', defaultValue);
   useLayoutEffect(() => { setValue(setterArg); }, []);
   return <span>{value}</span>;
 };
 
 const SetterExample = buildSetterExample('example');
 const CallbackSetterExample = buildSetterExample((value) => `${value}${value}`);
+const DefaultCallbackSetterExample = buildSetterExample((value) => `${value}${value}`, 'default');
 const ResetterExample = buildSetterExample();
 const EmptyStringResetterExample = buildSetterExample('');
 
@@ -87,10 +88,24 @@ describe('useHashParam', () => {
     });
 
     describe('called with a function', () => {
-      test('removes hash parameter', () => {
-        global.location.hash = '#?value=cous';
+      test('passes current value to the function', () => {
+        global.location.hash = '#?value=hello';
         render(<CallbackSetterExample />);
-        expect(global.location.hash).toEqual('#?value=couscous');
+        expect(global.location.hash).toEqual('#?value=hellohello');
+      });
+
+      describe('when hash param is not set', () => {
+        test('if default value is provided, passes default value to the function', () => {
+          global.location.hash = '';
+          render(<DefaultCallbackSetterExample />);
+          expect(global.location.hash).toEqual('#?value=defaultdefault');
+        });
+
+        test("if no default value is provided, passes undefined to the function", () => {
+          global.location.hash = '';
+          render(<CallbackSetterExample />);
+          expect(global.location.hash).toEqual('#?value=undefinedundefined');
+        });
       });
     });
 

@@ -1,21 +1,23 @@
-const { useState, useEffect, useCallback } = require('react');
+import { useState, useEffect, useCallback } from 'react';
 
-const getHashSearchParams = (location) => {
+const getHashSearchParams = (location: Location): [string, URLSearchParams] => {
   const hash = location.hash.slice(1);
   const [prefix, query] = hash.split('?');
 
   return [prefix, new URLSearchParams(query)];
 };
 
-const getHashParam = (key, defaultValue) => {
+const getHashParam = (key: string, defaultValue?: string) => {
   if (typeof window === 'undefined') {
     return defaultValue;
   }
+
   const [, searchParams] = getHashSearchParams(window.location);
-  return searchParams.get(key);
+
+  return searchParams.get(key) ?? undefined;
 };
 
-const setHashParam = (key, value) => {
+const setHashParam = (key: string, value?: string) => {
   if (typeof window !== 'undefined') {
     const [prefix, searchParams] = getHashSearchParams(window.location);
 
@@ -30,7 +32,17 @@ const setHashParam = (key, value) => {
   }
 };
 
-const useHashParam = (key, defaultValue) => {
+type Updater = (string?) => string;
+type Setter = (value: (string | Updater | undefined)) => void;
+
+/**
+ * @param key The parameter-name to use from the hash-string query string.
+ * @param defaultValue A default value to use if the parameter is not specified and on the server.
+ * @returns A two-tuple, the first element is the selected param value (either extracted from the hash param or the default value).
+ *  The second element is a setter function to change the param value.
+ */
+
+const useHashParam = (key: string, defaultValue?: string): [string | undefined, Setter] => {
   const [innerValue, setInnerValue] = useState(getHashParam(key, defaultValue));
 
   useEffect(() => {
@@ -50,4 +62,5 @@ const useHashParam = (key, defaultValue) => {
 
   return [innerValue || defaultValue, setValue];
 };
-module.exports = useHashParam;
+
+export default useHashParam;

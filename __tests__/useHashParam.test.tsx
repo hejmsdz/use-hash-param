@@ -13,7 +13,7 @@ const DefaultGetterExample = () => {
   return <span>{value}</span>;
 };
 
-const buildSetterExample = (setterArg) => () => {
+const buildSetterExample = (setterArg?) => () => {
   const [value, setValue] = useHashParam('value');
   useLayoutEffect(() => { setValue(setterArg); }, []);
   return <span>{value}</span>;
@@ -21,7 +21,7 @@ const buildSetterExample = (setterArg) => () => {
 
 const SetterExample = buildSetterExample('example');
 const CallbackSetterExample = buildSetterExample((value) => `${value}${value}`);
-const ResetterExample = buildSetterExample(undefined);
+const ResetterExample = buildSetterExample();
 const EmptyStringResetterExample = buildSetterExample('');
 
 describe('useHashParam', () => {

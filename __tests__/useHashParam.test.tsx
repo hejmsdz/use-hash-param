@@ -13,9 +13,9 @@ const DefaultGetterExample = () => {
   return <span>{value}</span>;
 };
 
-const buildSetterExample = (setterArg?, defaultValue?) => () => {
+const buildSetterExample = (setterArg?, defaultValue?, setterOptions?) => () => {
   const [value, setValue] = useHashParam('value', defaultValue);
-  useLayoutEffect(() => { setValue(setterArg); }, []);
+  useLayoutEffect(() => { setValue(setterArg, setterOptions); }, []);
   return <span>{value}</span>;
 };
 
@@ -24,6 +24,7 @@ const CallbackSetterExample = buildSetterExample((value) => `${value}${value}`);
 const DefaultCallbackSetterExample = buildSetterExample((value) => `${value}${value}`, 'default');
 const ResetterExample = buildSetterExample();
 const EmptyStringResetterExample = buildSetterExample('');
+const SetterExampleWithHistoryPush = buildSetterExample('example', undefined, { history: 'push' });
 
 describe('useHashParam', () => {
   beforeEach(() => {
@@ -134,6 +135,20 @@ describe('useHashParam', () => {
         global.location.hash = '#fragment?value=example';
         render(<EmptyStringResetterExample />);
         expect(global.location.hash).toEqual('#fragment');
+      });
+    });
+
+    describe('`history` option', () => {
+      test('does not add a history entry when called with default options', () => {
+        const historyLengthBefore = history.length;
+        render(<SetterExample />);
+        expect(history.length).toEqual(historyLengthBefore);
+      });
+
+      test('adds a history entry when called with "push" option', () => {
+        const historyLengthBefore = history.length;
+        render(<SetterExampleWithHistoryPush />);
+        expect(history.length).toEqual(historyLengthBefore + 1);
       });
     });
   });

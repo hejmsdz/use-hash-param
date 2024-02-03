@@ -17,7 +17,7 @@ const getHashParam = (key: string, defaultValue?: string) => {
   return searchParams.get(key) ?? defaultValue;
 };
 
-const setHashParam = (key: string, value?: string) => {
+const setHashParam = (key: string, value: string|undefined, shouldReplaceState: boolean) => {
   if (typeof window !== 'undefined') {
     const [prefix, searchParams] = getHashSearchParams(window.location);
 
@@ -28,12 +28,20 @@ const setHashParam = (key: string, value?: string) => {
     }
 
     const search = searchParams.toString();
-    window.location.hash = search ? `${prefix}?${search}` : prefix;
+    const hash = search ? `${prefix}?${search}` : prefix;
+    if (shouldReplaceState && 'replaceState' in history) {
+      history.replaceState(null, '', `#${hash}`);
+    } else {
+      window.location.hash = hash;
+    }
   }
 };
 
 type Updater = (prevValue?: string) => string;
-type Setter = (value?: (string | Updater)) => void;
+type SetterOptions = {
+  history: 'replace' | 'push',
+};
+type Setter = (value?: (string | Updater), options?: SetterOptions) => void;
 
 /**
  * @param key The parameter-name to use from the hash-string query string.
@@ -52,12 +60,16 @@ const useHashParam = (key: string, defaultValue?: string): [string | undefined, 
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, [key]);
 
-  const setValue = useCallback((value?: string | Updater) => {
-    if (typeof value === 'function') {
-      setHashParam(key, value(getHashParam(key, defaultValue)));
-    } else {
-      setHashParam(key, value);
-    }
+  const setValue = useCallback<Setter>((
+    newValue?: string | Updater,
+    options: SetterOptions = { history: 'replace' },
+  ) => {
+    const newInnerValue = typeof newValue === 'function'
+      ? newValue(getHashParam(key, defaultValue))
+      : newValue;
+
+      setInnerValue(newInnerValue);
+      setHashParam(key, newInnerValue, options.history === 'replace');
   }, [key]);
 
   return [innerValue || defaultValue, setValue];

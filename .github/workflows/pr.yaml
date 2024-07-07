@@ -1,16 +1,12 @@
+---
 name: Pr
 
-on:
+"on":
   pull_request:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
-
-# Needed for nx-set-shas within nx-cloud-main.yml, when run on the master branch
-permissions:
-  actions: read
-  contents: read
 
 jobs:
   Check:

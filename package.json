@@ -8,15 +8,23 @@
   ],
   "main": "./dist/use-hash-param.cjs",
   "module": "./dist/use-hash-param.js",
+  "types": "./dist/use-hash-param.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/use-hash-param.js",
-      "require": "./dist/use-hash-param.umd.cjs"
+      "import": {
+        "types": "./dist/use-hash-param.d.ts",
+        "default": "./dist/use-hash-param.js"
+      },
+      "require": {
+        "types": "./dist/use-hash-param.d.cts",
+        "default": "./dist/use-hash-param.umd.cjs"
+      }
     }
   },
   "scripts": {
-    "build": "vite build",
+    "build": "vite build && npx publint",
     "example": "cd example && npm run dev",
+    "lint": "eslint .",
     "test": "vitest"
   },
   "keywords": [

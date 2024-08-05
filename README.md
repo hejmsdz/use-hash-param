@@ -15,19 +15,14 @@ npm install --save use-hash-param
 ## Usage
 
 ```jsx
-import React from 'react';
-import useHashParam from 'use-hash-param';
+import React from "react";
+import useHashParam from "use-hash-param";
 
 function ControlledInput() {
-  const [name, setName] = useHashParam('name');
+  const [name, setName] = useHashParam("name");
 
-  return (
-    <input
-      value={name || ''}
-      onChange={e => setName(e.target.value)}
-    />
-  );
-};
+  return <input value={name || ""} onChange={(e) => setName(e.target.value)} />;
+}
 ```
 
 Anything you type into the input will be reflected in the address bar
@@ -35,4 +30,5 @@ Anything you type into the input will be reflected in the address bar
 And if you open a link with such a parameter, the field will be populated automatically!
 
 ## Example
+
 - [https://codesandbox.io/s/usehashparam-011-example-h8mol](https://codesandbox.io/s/usehashparam-011-example-h8mol)

@@ -1,14 +1,14 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from "react";
 
 const getHashSearchParams = (location: Location): [string, URLSearchParams] => {
   const hash = location.hash.slice(1);
-  const [prefix, query] = hash.split('?');
+  const [prefix, query] = hash.split("?");
 
   return [prefix, new URLSearchParams(query)];
 };
 
 const getHashParam = (key: string, defaultValue?: string) => {
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return defaultValue;
   }
 
@@ -17,11 +17,15 @@ const getHashParam = (key: string, defaultValue?: string) => {
   return searchParams.get(key) ?? defaultValue;
 };
 
-const setHashParam = (key: string, value: string|undefined, shouldReplaceState: boolean) => {
-  if (typeof window !== 'undefined') {
+const setHashParam = (
+  key: string,
+  value: string | undefined,
+  shouldReplaceState: boolean,
+) => {
+  if (typeof window !== "undefined") {
     const [prefix, searchParams] = getHashSearchParams(window.location);
 
-    if (typeof value === 'undefined' || value === '') {
+    if (typeof value === "undefined" || value === "") {
       searchParams.delete(key);
     } else {
       searchParams.set(key, value);
@@ -29,8 +33,8 @@ const setHashParam = (key: string, value: string|undefined, shouldReplaceState: 
 
     const search = searchParams.toString();
     const hash = search ? `${prefix}?${search}` : prefix;
-    if (shouldReplaceState && 'replaceState' in history) {
-      history.replaceState(null, '', `#${hash}`);
+    if (shouldReplaceState && "replaceState" in history) {
+      history.replaceState(null, "", `#${hash}`);
     } else {
       window.location.hash = hash;
     }
@@ -39,9 +43,9 @@ const setHashParam = (key: string, value: string|undefined, shouldReplaceState: 
 
 type Updater = (prevValue?: string) => string;
 type SetterOptions = {
-  history: 'replace' | 'push',
+  history: "replace" | "push";
 };
-type Setter = (value?: (string | Updater), options?: SetterOptions) => void;
+type Setter = (value?: string | Updater, options?: SetterOptions) => void;
 
 /**
  * @param key The parameter-name to use from the hash-string query string.
@@ -50,27 +54,37 @@ type Setter = (value?: (string | Updater), options?: SetterOptions) => void;
  *  The second element is a setter function to change the param value.
  */
 
-const useHashParam = (key: string, defaultValue?: string): [string | undefined, Setter] => {
-  const [innerValue, setInnerValue] = useState<string|undefined>(() => getHashParam(key, defaultValue));
+const useHashParam = (
+  key: string,
+  defaultValue?: string,
+): [string | undefined, Setter] => {
+  const [innerValue, setInnerValue] = useState<string | undefined>(() =>
+    getHashParam(key, defaultValue),
+  );
 
   useEffect(() => {
-    const handleHashChange = () => setInnerValue(getHashParam(key, defaultValue));
+    const handleHashChange = () =>
+      setInnerValue(getHashParam(key, defaultValue));
     handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
   }, [key]);
 
-  const setValue = useCallback<Setter>((
-    newValue?: string | Updater,
-    options: SetterOptions = { history: 'replace' },
-  ) => {
-    const newInnerValue = typeof newValue === 'function'
-      ? newValue(getHashParam(key, defaultValue))
-      : newValue;
+  const setValue = useCallback<Setter>(
+    (
+      newValue?: string | Updater,
+      options: SetterOptions = { history: "replace" },
+    ) => {
+      const newInnerValue =
+        typeof newValue === "function"
+          ? newValue(getHashParam(key, defaultValue))
+          : newValue;
 
       setInnerValue(newInnerValue);
-      setHashParam(key, newInnerValue, options.history === 'replace');
-  }, [key]);
+      setHashParam(key, newInnerValue, options.history === "replace");
+    },
+    [key],
+  );
 
   return [innerValue || defaultValue, setValue];
 };

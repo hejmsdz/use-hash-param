@@ -22,9 +22,10 @@
     }
   },
   "scripts": {
-    "build": "vite build && npx publint",
+    "build": "vite build && publint",
     "example": "cd example && npm run dev",
     "lint": "eslint .",
+    "format": "prettier . --write",
     "test": "vitest"
   },
   "keywords": [
@@ -54,6 +55,7 @@
     "eslint": "^9.8.0",
     "eslint-plugin-react": "^7.35.0",
     "globals": "^15.9.0",
+    "prettier": "^3.3.3",
     "publint": "^0.2.9",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",

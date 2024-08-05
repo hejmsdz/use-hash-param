@@ -1,7 +1,7 @@
 import { describe, test, expect, beforeEach, afterEach } from "vitest";
 import React, { useLayoutEffect } from "react";
 import { render, act, cleanup } from "@testing-library/react";
-import useHashParam from "../src";
+import useHashParam from "..";
 
 const GetterExample = () => {
   const [value] = useHashParam("value");

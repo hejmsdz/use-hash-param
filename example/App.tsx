@@ -1,5 +1,5 @@
 import React from "react";
-import useHashParam from "../src";
+import useHashParam from "..";
 
 function ControlledInput() {
   const [name, setName] = useHashParam("name");

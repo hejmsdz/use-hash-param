@@ -13,6 +13,7 @@ const DefaultGetterExample = () => {
   return <span>{value}</span>;
 };
 
+// eslint-disable-next-line react/display-name
 const buildSetterExample = (setterArg?, defaultValue?, setterOptions?) => () => {
   const [value, setValue] = useHashParam('value', defaultValue);
   useLayoutEffect(() => { setValue(setterArg, setterOptions); }, []);
